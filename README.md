@@ -14,7 +14,7 @@ A robust full-stack web application built with **Java 25** and **Spring Boot 4.0
 
 ## 🛠 Tech Stack
 
-- **Backend:** Java 25, Spring Boot 3.4+, Spring Data JPA.
+- **Backend:** Java 25, Spring Boot 4.0.4, Spring Data JPA.
 - **Frontend:** HTML5, JavaScript, Thymeleaf, Bootstrap 5.
 - **Database:** MySQL / PostgreSQL (Docker ready).
 - **Tooling:** Maven, Lombok, IntelliJ IDEA.
