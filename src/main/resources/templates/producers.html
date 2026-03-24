@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producer Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .main-container { max-width: 900px; margin-top: 50px; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .table thead { background-color: #212529; color: white; }
+        .btn-action { min-width: 120px; font-weight: 500; }
+    </style>
+</head>
+<body>
+
+<div class="container main-container">
+    <h2 class="mb-4 text-dark border-bottom pb-2">Registered Producers</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+            <tr>
+                <th style="width: 10%;">ID</th>
+                <th style="width: 50%;">Name</th>
+                <th style="width: 25%;">Stock Quantity</th>
+                <th style="width: 15%;">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${producers}">
+                <td th:text="${p.id}" class="fw-bold">1</td>
+                <td th:text="${p.name}">Example Name</td>
+                <td th:text="${p.stockQuantity}">0</td>
+                <td><span class="badge bg-success">Active</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(producers)}" class="alert alert-info mt-3">
+        No producers found in the database. Use the button below to add one.
+    </div>
+
+    <div class="mt-4 d-flex gap-3">
+        <button class="btn btn-success btn-action" onclick="handleAdd()">+ Add New</button>
+        <button class="btn btn-danger btn-action" onclick="handleDelete()">Delete by ID</button>
+    </div>
+</div>
+
+<script>
+    // Função para Adicionar um Novo Produtor
+    function handleAdd() {
+        const name = prompt("Enter the Producer Name:");
+        if (!name || name.trim() === "") return;
+
+        const stock = prompt("Enter the Stock Quantity:");
+        if (stock !== null && !isNaN(stock) && stock.trim() !== "") {
+            // Redireciona para o Controller: /view/producers/add?name=...&stock=...
+            const url = "/view/producers/add?name=" + encodeURIComponent(name) + "&stock=" + stock;
+            window.location.href = url;
+        } else if (stock !== null) {
+            alert("Please enter a valid number for the quantity.");
+        }
+    }
+
+    // Função para Deletar um Produtor pelo ID
+    function handleDelete() {
+        const id = prompt("Enter the ID of the producer you want to delete:");
+
+        if (id !== null && id.trim() !== "") {
+            if (!isNaN(id)) {
+                if (confirm("Are you sure you want to permanently delete ID: " + id + "?")) {
+                    // Redireciona para o Controller: /view/producers/delete-by-id?id=...
+                    window.location.href = "/view/producers/delete-by-id?id=" + id;
+                }
+            } else {
+                alert("Please enter a valid numeric ID.");
+            }
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

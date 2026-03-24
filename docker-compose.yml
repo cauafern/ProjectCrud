@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: crudProducer
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - projeto_servico_dados:/var/lib/mysql
+
+volumes:
+  projeto_servico_dados:
